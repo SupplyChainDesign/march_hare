@@ -40,7 +40,7 @@ module MarchHare
     # @option options [java.util.concurrent.ThreadFactory] :thread_factory Thread factory RabbitMQ Java client will use (useful in restricted PaaS platforms such as GAE)
     #
     # @see http://rubymarchhare.info/articles/connecting.html Connecting to RabbitMQ guide
-    def self.connect(options={})
+    def self.connect(options={}, &block)
       cf = ConnectionFactory.new
 
       cf.uri                = options[:uri]          if options[:uri]
@@ -69,6 +69,7 @@ module MarchHare
         end
       end
 
+      yield(cf)
 
       new(cf, options)
     end
