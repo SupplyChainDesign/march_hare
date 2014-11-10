@@ -40,6 +40,7 @@ module MarchHare
     # @option options [java.util.concurrent.ThreadFactory] :thread_factory Thread factory RabbitMQ Java client will use (useful in restricted PaaS platforms such as GAE)
     #
     # @see http://rubymarchhare.info/articles/connecting.html Connecting to RabbitMQ guide
+    # Takes an optional block, which will yield an instance of the rabbitmq ConnectionFactory for further configuration
     def self.connect(options={}, &block)
       cf = ConnectionFactory.new
 
@@ -53,6 +54,7 @@ module MarchHare
 
       cf.requested_heartbeat = heartbeat_from(options)
       cf.connection_timeout  = connection_timeout_from(options) if include_connection_timeout?(options)
+      cf.setAutomaticRecoveryEnabled = options.has_key?(:automatic_recovery) ? options[:automatic_recovery] : true
 
       cf.thread_factory      = thread_factory_from(options)    if include_thread_factory?(options)
       cf.exception_handler   = exception_handler_from(options) if include_exception_handler?(options)
