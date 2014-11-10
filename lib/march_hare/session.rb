@@ -71,7 +71,7 @@ module MarchHare
         end
       end
 
-      yield(cf)
+      yield(cf) if block_given?
 
       new(cf, options)
     end
