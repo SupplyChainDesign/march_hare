@@ -54,7 +54,7 @@ module MarchHare
 
       cf.requested_heartbeat = heartbeat_from(options)
       cf.connection_timeout  = connection_timeout_from(options) if include_connection_timeout?(options)
-      cf.setAutomaticRecoveryEnabled = options.has_key?(:automatic_recovery) ? options[:automatic_recovery] : true
+      cf.automatic_recovery_enabled = options.has_key?(:automatic_recovery) ? options[:automatic_recovery] : true
 
       cf.thread_factory      = thread_factory_from(options)    if include_thread_factory?(options)
       cf.exception_handler   = exception_handler_from(options) if include_exception_handler?(options)
